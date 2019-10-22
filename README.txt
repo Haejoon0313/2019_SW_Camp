@@ -1,1 +1,2 @@
 git 사용법 ; https://rogerdudler.github.io/git-guide/index.ko.html
+git 초기설정 ; https://medium.com/@psychet_learn/git-%EC%82%AC%EC%9A%A9%EB%B2%95-3%EC%9E%A5-github-%EC%9D%B4%EC%9A%A9%ED%95%98%EA%B8%B0-f53e765844e3
