@@ -133,7 +133,7 @@ void loop() {
   
   sensorValue = analogRead(SOUND_SENSOR_PIN);
   Serial.println(sensorValue);
-  print_height(((sensorValue/10)-2)%8 , sensorValue);
+  print_height(sensorValue);
   //Serial.println(((sensorValue/10)-2)%8);
   ledPrint(sensorValue);
   
@@ -183,9 +183,43 @@ void print_time(){
   lcd.print(Tsec);
 }
 
-void print_height(int height , int sensorValue){
+void print_height(int sensorValue){
    lcd.setCursor(0, 1);
    lcd.print(sensorValue);
+   int height;
+
+ switch(sensorValue/10){
+        case 1:
+        case 2:
+        height = 2;
+        break;
+        
+        case 3:
+        case 4:
+        height = 3;
+        break;
+        
+        case 5:
+        case 6:
+        height = 4;
+        break;
+        case 7:
+        height = 5;
+        break;
+        
+        case 8:
+        height = 6;
+        break; 
+        
+        case 9:
+        height = 1;
+        break;
+        
+        default:
+        height = 8;
+        break;
+      }
+   
   for (int i = 0 ; i < height ; i++) { 
    lcd.write(byte(i));
   }
