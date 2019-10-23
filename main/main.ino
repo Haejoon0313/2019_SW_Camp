@@ -15,6 +15,7 @@
 LiquidCrystal lcd(R0S_PIN,E_PIN,D4_PIN,D5_PIN,D6_PIN,D7_PIN); 
 
 int sensorValue;
+int cnt=0;
 unsigned long Ttime = 0;
 int Tsec = 0;
 int Tmin = 0;
@@ -140,20 +141,36 @@ void loop() {
 }
 
 void ledPrint(int sensorValue){
-  if(sensorValue < 100){
-    analogWrite(RED_PIN, 0);
-    analogWrite(GREEN_PIN, 50);
-    analogWrite(BLUE_PIN, 0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-  }      
-  else if(sensorValue < 120){
+  if(cnt > 0){
+    analogWrite(RED_PIN, 50);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 0);
+    cnt++;
+    if(cnt == 10){
+      cnt = 0;
+    }
+  }
+  else if(cnt < 0){
     analogWrite(RED_PIN, 40);
     analogWrite(GREEN_PIN, 20);
     analogWrite(BLUE_PIN, 0);
+    cnt--;
+    if(cnt == -10){
+      cnt = 0;
+    }
   }
-  else{  
-    analogWrite(RED_PIN, 50);
-    analogWrite(GREEN_PIN, 0);
-    analogWrite(BLUE_PIN, 0); 
+  else{
+    if(sensorValue > 120){
+      cnt++;
+    }
+    else if(sensorValue > 100){
+      cnt--;
+    }
+    else{
+      analogWrite(RED_PIN, 0);
+      analogWrite(GREEN_PIN, 50);
+      analogWrite(BLUE_PIN, 0);
+    }
   }
 }
 
