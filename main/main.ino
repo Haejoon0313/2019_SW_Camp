@@ -129,23 +129,23 @@ void loop() {
   Thour = Ttime/(60*60)%24;
   print_time();
   if(Tsec == 0) lcd.clear(); 
-  print_height(Tsec%8);
   
   sensorValue = analogRead(SOUND_SENSOR_PIN);
   Serial.println(sensorValue);
-  
+  print_height(((sensorValue/10)-2)%8 , sensorValue);
+  //Serial.println(((sensorValue/10)-2)%8);
   ledPrint(sensorValue);
   
   delay(100);
 }
 
 void ledPrint(int sensorValue){
-  if(sensorValue < 580){
+  if(sensorValue < 100){
     analogWrite(RED_PIN, 0);
     analogWrite(GREEN_PIN, 50);
     analogWrite(BLUE_PIN, 0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
   }      
-  else if(sensorValue < 600){
+  else if(sensorValue < 120){
     analogWrite(RED_PIN, 40);
     analogWrite(GREEN_PIN, 20);
     analogWrite(BLUE_PIN, 0);
@@ -166,9 +166,12 @@ void print_time(){
   lcd.print(Tsec);
 }
 
-void print_height(int height){
+void print_height(int height , int sensorValue){
    lcd.setCursor(0, 1);
+   lcd.print(sensorValue);
   for (int i = 0 ; i < height ; i++) { 
    lcd.write(byte(i));
   }
+  lcd.print("                ");
+  delay(100);
 }
