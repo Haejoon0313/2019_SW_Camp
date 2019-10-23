@@ -1,4 +1,8 @@
-import os, serial
+import os
+import serial
+import plotly.graph_objs as go
+import plotly
+
 
 COMPORT = ''
 BAUDRATE = 9600
@@ -23,7 +27,25 @@ def monitor():
     except KeyboardInterrupt:
         return data
 
-
+def graph_draw(sensor_data):
+    data = [
+        go.Line(
+            x=list(range(len(sensor_data))),
+            y=sensor_data
+        )
+    ]
+     
+    layout = plotly.graph_objs.Layout(
+        title='sleeping_pattern_chart'
+    )
+     
+    figure = plotly.graph_objs.Figure(
+        data=data, layout=layout
+    )
+     
+    plotly.offline.plot(
+    figure, filename='sleeping_pattern_chart.html'
+    )
 
 """ -------------------------------------------
 MAIN APPLICATION
@@ -35,6 +57,6 @@ print("Start Serial Monitor")
 
 
 sensor_data = monitor()
-print(sensor_data)
+graph_draw(sensor_data)
 
 os.system("Pause")
